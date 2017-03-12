@@ -1,10 +1,16 @@
-import json
+import csv
+from holding import Holding
 import requests
 from security import Security
+import urllib2
 
 __security_request_url_template = '''
 https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.quotes where symbol in ("{0}") 
 &format=json&env=store://datatables.org/alltableswithkeys&callback=
+'''
+
+__ishares_core_sp500_holdings_url = '''
+https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf/1467271812596.ajax?fileType=csv&fileName=IVV_holdings&dataType=fund
 '''
 
 def request_security(symbol):
@@ -29,3 +35,26 @@ def construct_security_data_from_response(json_response):
         security_data['price_percent_change'] = response_payload['Change_PercentChange']
 
     return security_data
+
+def request_sp500_holdings():
+    holdings = []
+    reader = csv.reader(urllib2.urlopen(__ishares_core_sp500_holdings_url))
+
+    while reader.next() != ['\xc2\xa0']:
+        continue
+
+    reader.next()
+    for csv_row in reader:
+        if csv_row != ['\xc2\xa0']:
+            holding_data = construct_sp500_holding_data_from_csv_row(csv_row)
+            holdings.append(Holding(holding_data))
+
+    return holdings
+
+def construct_sp500_holding_data_from_csv_row(csv_row):
+    holding_data = dict()
+    holding_data['symbol'] = csv_row[0]
+    holding_data['name'] = csv_row[1]
+    holding_data['weight'] = csv_row[3]
+
+    return holding_data
