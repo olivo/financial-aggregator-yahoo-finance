@@ -56,5 +56,6 @@ def construct_sp500_holding_data_from_csv_row(csv_row):
     holding_data['symbol'] = csv_row[0]
     holding_data['name'] = csv_row[1]
     holding_data['weight'] = csv_row[3]
+    holding_data['sector'] = csv_row[8]
 
     return holding_data
