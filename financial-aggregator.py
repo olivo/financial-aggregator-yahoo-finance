@@ -23,3 +23,24 @@ print "The holdings of S&P 500 (tracked by iShares Core S&P 500 ETF) are:"
 
 for holding in holdings:
     print holding
+
+print ""
+
+print "The holdings of S&P 500 from the technology sector are:"
+technology_holdings = filter(lambda h: h.sector == "Information Technology", holdings)
+for holding in technology_holdings:
+    print holding
+
+print ""
+
+print "The holdings of S&P 500 from the financial sector are:"
+financial_holdings = filter(lambda h: h.sector == "Financials", holdings)
+for holding in financial_holdings:
+    print holding
+
+print ""
+
+print "The holdings of S&P 500 from the healthcare sector are:"
+healthcare_holdings = filter(lambda h: h.sector == "Health Care", holdings)
+for holding in healthcare_holdings:
+    print holding
