@@ -1,4 +1,4 @@
-from security_helper import request_security, request_sp500_holdings
+from security_helper import request_security, request_sp500_holdings, request_security_historical_quotes
 
 __top_us_stock_market_indices = ['^DJI', '^GSPC', '^IXIC', '^RUA', '^RUT', '^RUI']
 __top_us_tech_stocks = ['AAPL', 'AMZN', 'FB', 'GOOGL', 'MSFT']
@@ -44,3 +44,10 @@ print "The holdings of S&P 500 from the healthcare sector are:"
 healthcare_holdings = filter(lambda h: h.sector == "Health Care", holdings)
 for holding in healthcare_holdings:
     print holding
+
+print ""
+
+print "The historical quotes for Apple are:"
+apple_historical_quotes = request_security_historical_quotes()
+for quote in apple_historical_quotes:
+    print quote
