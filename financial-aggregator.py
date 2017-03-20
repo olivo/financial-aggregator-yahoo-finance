@@ -60,7 +60,7 @@ frequency = "d"
 
 apple_historical_quotes = request_security_historical_quotes(symbol, startDay, startMonth, startYear, endDay, endMonth, \
                                                              endYear, frequency)
-print "Symbol - Date - Open - High - Low - Close - Volume - Adjusted Close"
+print "Symbol - Date - Open - High - Low - Close - Volume - Adjusted Close - Change"
 
 for quote in apple_historical_quotes:
     print quote
