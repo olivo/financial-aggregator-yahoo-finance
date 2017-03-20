@@ -1,5 +1,6 @@
 from security_helper import request_security, request_sp500_holdings
 from historical_security_quote_helper import request_security_historical_quotes
+from historical_security_quote_period import HistoricalSecurityQuotePeriod
 
 __top_us_stock_market_indices = ['^DJI', '^GSPC', '^IXIC', '^RUA', '^RUT', '^RUI']
 __top_us_tech_stocks = ['AAPL', 'AMZN', 'FB', 'GOOGL', 'MSFT']
@@ -60,7 +61,7 @@ frequency = "d"
 
 apple_historical_quotes = request_security_historical_quotes(symbol, startDay, startMonth, startYear, endDay, endMonth, \
                                                              endYear, frequency)
+apple_historical_security_quote_period = HistoricalSecurityQuotePeriod(apple_historical_quotes)
 print "Symbol - Date - Open - High - Low - Close - Volume - Adjusted Close - Change"
 
-for quote in apple_historical_quotes:
-    print quote
+print apple_historical_security_quote_period
