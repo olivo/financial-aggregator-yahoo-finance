@@ -9,10 +9,6 @@ https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.quotes w
 &format=json&env=store://datatables.org/alltableswithkeys&callback=
 '''
 
-__historical_apple_quotes_url = '''
-http://ichart.finance.yahoo.com/table.csv?s=AAPL&d=4&e=2&f=2011&g=d&a=0&b=1&c=2008&ignore.csv
-'''
-
 __ishares_core_sp500_holdings_url = '''
 https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf/1467271812596.ajax?fileType=csv&fileName=IVV_holdings&dataType=fund
 '''
@@ -39,11 +35,6 @@ def construct_security_data_from_response(json_response):
         security_data['price_percent_change'] = response_payload['Change_PercentChange']
 
     return security_data
-
-def request_security_historical_quotes():
-    request_url = __historical_apple_quotes_url
-    response = requests.post(request_url)
-    return response
 
 def request_sp500_holdings():
     holdings = []

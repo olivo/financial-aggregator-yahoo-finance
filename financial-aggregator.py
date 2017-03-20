@@ -1,4 +1,5 @@
-from security_helper import request_security, request_sp500_holdings, request_security_historical_quotes
+from security_helper import request_security, request_sp500_holdings
+from historical_security_quote_helper import request_security_historical_quotes
 
 __top_us_stock_market_indices = ['^DJI', '^GSPC', '^IXIC', '^RUA', '^RUT', '^RUI']
 __top_us_tech_stocks = ['AAPL', 'AMZN', 'FB', 'GOOGL', 'MSFT']
@@ -48,6 +49,18 @@ for holding in healthcare_holdings:
 print ""
 
 print "The historical quotes for Apple are:"
-apple_historical_quotes = request_security_historical_quotes()
+symbol = "AAPL"
+startDay = 3
+startMonth = 1
+startYear = 2017
+endDay = 3
+endMonth = 3
+endYear = 2017
+frequency = "d"
+
+apple_historical_quotes = request_security_historical_quotes(symbol, startDay, startMonth, startYear, endDay, endMonth, \
+                                                             endYear, frequency)
+print "Symbol - Date - Open - High - Low - Close - Volume - Adjusted Close"
+
 for quote in apple_historical_quotes:
     print quote
