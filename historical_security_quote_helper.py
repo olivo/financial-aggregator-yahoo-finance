@@ -1,3 +1,4 @@
+from collections import deque
 import csv
 from historical_security_quote import HistoricalSecurityQuote
 import urllib2
@@ -6,19 +7,19 @@ __historical_security_quote_request_url_template = '''
 http://ichart.yahoo.com/table.csv?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g={7}&ignore=.csv
 '''
 
-def request_security_historical_quotes(symbol, startDay, startMonth, startYear, endDay, endMonth, endYear, frequency):
-    request_url = __historical_security_quote_request_url_template.format(symbol, startMonth - 1, startDay, startYear, \
-                                                                          endMonth - 1, endDay, endYear, frequency)
+def request_security_historical_quotes(symbol, start_day, start_month, start_year, end_day, end_month, end_year, frequency):
+    request_url = __historical_security_quote_request_url_template.format(symbol, start_month - 1, start_day, start_year, \
+                                                                          end_month - 1, end_day, end_year, frequency)
     reader = csv.reader(urllib2.urlopen(request_url))
 
-    historical_security_quotes = []
+    historical_security_quotes = deque()
 
     reader.next()
 
     for quote in reader:
         historical_security_quote_data = __construct_historical_security_quote_data(symbol, quote)
         historical_security_quote = HistoricalSecurityQuote(historical_security_quote_data)
-        historical_security_quotes.append(historical_security_quote)
+        historical_security_quotes.appendleft(historical_security_quote)
 
     return historical_security_quotes
 

@@ -51,17 +51,16 @@ print ""
 
 print "The historical quotes for Apple are:"
 symbol = "AAPL"
-startDay = 3
-startMonth = 1
-startYear = 2017
-endDay = 3
-endMonth = 3
-endYear = 2017
+start_day = 20
+start_month = 3
+start_year = 2016
+end_day = 20
+end_month = 3
+end_year = 2017
 frequency = "d"
 
-apple_historical_quotes = request_security_historical_quotes(symbol, startDay, startMonth, startYear, endDay, endMonth, \
-                                                             endYear, frequency)
+apple_historical_quotes = request_security_historical_quotes(symbol, start_day, start_month, start_year, end_day, end_month, \
+                                                             end_year, frequency)
 apple_historical_security_quote_period = HistoricalSecurityQuotePeriod(apple_historical_quotes)
-print "Symbol - Date - Open - High - Low - Close - Volume - Adjusted Close - Change"
 
 print apple_historical_security_quote_period
