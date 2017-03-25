@@ -64,3 +64,13 @@ apple_historical_quotes = request_security_historical_quotes(symbol, start_day, 
 apple_historical_security_quote_period = HistoricalSecurityQuotePeriod(apple_historical_quotes)
 
 print apple_historical_security_quote_period
+
+print "\n"
+
+print "The healthcare stock with best average monthly return in the S&P 500 during 03/20/2016 - 03/20/2017 is: "
+tech_historical_security_quotes = map(lambda x: HistoricalSecurityQuotePeriod(\
+                                            request_security_historical_quotes(x, start_day, start_month, start_year, \
+                                                                               end_day, end_month, end_year, frequency)) \
+                                  , map(lambda x: x.symbol, healthcare_holdings))
+
+print max(tech_historical_security_quotes, key = lambda x: x.returns_mean)
