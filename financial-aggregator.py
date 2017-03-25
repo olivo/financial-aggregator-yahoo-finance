@@ -23,27 +23,26 @@ holdings = request_sp500_holdings()
 
 print "The holdings of S&P 500 (tracked by iShares Core S&P 500 ETF) are:"
 
-for holding in holdings:
-    print holding
+print holdings
 
 print ""
 
 print "The holdings of S&P 500 from the technology sector are:"
-technology_holdings = filter(lambda h: h.sector == "Information Technology", holdings)
+technology_holdings = holdings.get_holdings_by_sector("Information Technology")
 for holding in technology_holdings:
     print holding
 
 print ""
 
 print "The holdings of S&P 500 from the financial sector are:"
-financial_holdings = filter(lambda h: h.sector == "Financials", holdings)
+financial_holdings = holdings.get_holdings_by_sector("Financials")
 for holding in financial_holdings:
     print holding
 
 print ""
 
 print "The holdings of S&P 500 from the healthcare sector are:"
-healthcare_holdings = filter(lambda h: h.sector == "Health Care", holdings)
+healthcare_holdings = holdings.get_holdings_by_sector("Health Care")
 for holding in healthcare_holdings:
     print holding
 
@@ -71,6 +70,6 @@ print "The healthcare stock with best average monthly return in the S&P 500 duri
 healthcare_historical_security_quotes = map(lambda x: HistoricalSecurityQuotePeriod(\
                                             request_security_historical_quotes(x, start_day, start_month, start_year, \
                                                                                end_day, end_month, end_year, frequency)) \
-                                  , map(lambda x: x.symbol, healthcare_holdings))
+                                        , map(lambda x: x.symbol, healthcare_holdings))
 
 print max(healthcare_historical_security_quotes, key = lambda x: x.returns_mean)

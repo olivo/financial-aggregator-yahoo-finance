@@ -1,6 +1,7 @@
 import csv
 from holding import Holding
 import requests
+from composite_security import CompositeSecurity
 from security import Security
 import urllib2
 
@@ -49,7 +50,7 @@ def request_sp500_holdings():
             holding_data = construct_sp500_holding_data_from_csv_row(csv_row)
             holdings.append(Holding(holding_data))
 
-    return holdings
+    return CompositeSecurity(holdings)
 
 def construct_sp500_holding_data_from_csv_row(csv_row):
     holding_data = dict()
