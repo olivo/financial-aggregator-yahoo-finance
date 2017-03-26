@@ -1,11 +1,15 @@
 from collections import deque
 import csv
 from historical_security_quote import HistoricalSecurityQuote
+from historical_security_quote_period import HistoricalSecurityQuotePeriod
 import urllib2
 
 __historical_security_quote_request_url_template = '''
 http://ichart.yahoo.com/table.csv?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g={7}&ignore=.csv
 '''
+
+def request_security_historical_quote_period(symbol, start_day, start_month, start_year, end_day, end_month, end_year, frequency):
+    return HistoricalSecurityQuotePeriod(request_security_historical_quotes(symbol, start_day, start_month, start_year, end_day, end_month, end_year, frequency))
 
 def request_security_historical_quotes(symbol, start_day, start_month, start_year, end_day, end_month, end_year, frequency):
     request_url = __historical_security_quote_request_url_template.format(symbol, start_month - 1, start_day, start_year, \
