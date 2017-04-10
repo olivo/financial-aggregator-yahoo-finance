@@ -2,7 +2,7 @@ from composite_security import CompositeSecurity
 from security_helper import request_security, request_sp500_holdings
 from historical_security_quote_helper import request_security_historical_quotes, request_security_historical_quote_period
 from historical_security_quote_period import HistoricalSecurityQuotePeriod
-from historical_composite_security_period_helper import expected_return_composite_securities_for_period
+from historical_composite_security_period_helper import expected_return_composite_securities_for_period, find_optimal_composite_security
 
 __top_us_stock_market_indices = ['^DJI', '^GSPC', '^IXIC', '^RUA', '^RUT', '^RUI']
 __top_us_tech_stocks = ['AAPL', 'AMZN', 'FB', 'GOOGL', 'MSFT']
@@ -52,12 +52,12 @@ print ""
 
 print "The historical quotes for Apple are:"
 symbol = "AAPL"
-start_day = 20
-start_month = 3
+start_day = 1
+start_month = 1
 start_year = 2016
-end_day = 20
-end_month = 3
-end_year = 2017
+end_day = 31
+end_month = 12
+end_year = 2016
 frequency = "d"
 
 apple_historical_security_quote_period = request_security_historical_quote_period(symbol, start_day, start_month, \
@@ -68,27 +68,17 @@ print apple_historical_security_quote_period
 
 print "\n"
 
-#print "The healthcare stock with best average monthly return in the S&P 500 during 03/20/2016 - 03/20/2017 is: "
-#healthcare_historical_security_quotes = map(lambda x: HistoricalSecurityQuotePeriod(\
-#                                            request_security_historical_quotes(x, start_day, start_month, start_year, \
-#                                                                               end_day, end_month, end_year, frequency)) \
-#                                        , map(lambda x: x.symbol, healthcare_holdings))
-
-#print max(healthcare_historical_security_quotes, key = lambda x: x.returns_mean)
-
 sp_holdings = holdings.get_holdings()
-top_tech_holdings_composite_security = CompositeSecurity(filter(lambda x: x.symbol in __top_us_tech_stocks, sp_holdings))
+stock_candidates = ['AAPL', 'AMZN', 'FB', 'GOOGL']
+top_tech_holdings_composite_security = CompositeSecurity(filter(lambda x: x.symbol in stock_candidates, sp_holdings))
 
-top_tech_holdings_composite_security.set_weight('AAPL', 1.0)
-top_tech_holdings_composite_security.set_weight('AMZN', 0.0)
-top_tech_holdings_composite_security.set_weight('GOOGL', 0.0)
-top_tech_holdings_composite_security.set_weight('FB', 0.0)
-top_tech_holdings_composite_security.set_weight('MSFT', 0.0)
+best_composite_security = find_optimal_composite_security(top_tech_holdings_composite_security, stock_candidates, 0, 100, \
+                                                          start_day, start_month, start_year, end_day, end_month, end_year, frequency)
 
-print "The expected average return of a composite security of top tech stocks (AAPL, AMZN, GOOGL, FB, MSFT) is: "
+print "The best composite security is: "
+print str(best_composite_security)
 
-expected_return_composite_security = expected_return_composite_securities_for_period(top_tech_holdings_composite_security \
-                                                                                     , start_day, start_month, start_year, \
-                                                                                     end_day, end_month, end_year, frequency)
-print expected_return_composite_security
+best_composite_security_expected_return = expected_return_composite_securities_for_period(best_composite_security, None, start_day, start_month, start_year, \
+                                                                                          end_day, end_month, end_year, frequency)
 
+print "The expected return per period for the best composite security is:", best_composite_security_expected_return

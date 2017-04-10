@@ -10,6 +10,10 @@ https://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.quotes w
 &format=json&env=store://datatables.org/alltableswithkeys&callback=
 '''
 
+__ishares_russell_3000_etf_holdings_url = '''
+https://www.ishares.com/us/products/239714/ishares-russell-3000-etf/1467271812596.ajax?fileType=csv&fileName=IWV_holdings&dataType=fund
+'''
+
 __ishares_core_sp500_holdings_url = '''
 https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf/1467271812596.ajax?fileType=csv&fileName=IVV_holdings&dataType=fund
 '''
@@ -56,7 +60,7 @@ def construct_sp500_holding_data_from_csv_row(csv_row):
     holding_data = dict()
     holding_data['symbol'] = csv_row[0]
     holding_data['name'] = csv_row[1]
-    holding_data['weight'] = csv_row[3]
+    holding_data['weight'] = float(csv_row[3])
     holding_data['sector'] = csv_row[8]
 
     return holding_data
