@@ -10,6 +10,12 @@ class HistoricalSecurityQuotePeriod:
         self.returns_mean = mean(returns_list)
         self.returns_variance = var(returns_list)
 
+    def get_historical_security_quotes(self):
+        return self.historical_security_quotes
+
+    def get_returns_mean(self):
+        return self.returns_mean
+
     @staticmethod
     def __returns_list(historical_security_quotes):
         if len(historical_security_quotes) == 0:
