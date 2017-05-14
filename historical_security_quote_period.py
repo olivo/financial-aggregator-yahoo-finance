@@ -6,15 +6,34 @@ class HistoricalSecurityQuotePeriod:
         self.historical_security_quotes = historical_security_quotes
         self.start_date = historical_security_quotes[-1].date
         self.end_date = historical_security_quotes[0].date
+        self.returns = HistoricalSecurityQuotePeriod.__compute_returns(historical_security_quotes)
         returns_list = HistoricalSecurityQuotePeriod.__returns_list(historical_security_quotes)
         self.returns_mean = mean(returns_list)
         self.returns_variance = var(returns_list)
 
+    def get_close_price_list(self):
+        res = []
+        for historical_quote in self.historical_security_quotes:
+            res.append(float(historical_quote.adjusted_close))
+
+        return res
+
     def get_historical_security_quotes(self):
         return self.historical_security_quotes
 
+    def get_returns(self):
+        return self.returns
+
     def get_returns_mean(self):
         return self.returns_mean
+
+    @staticmethod
+    def __compute_returns(historical_security_quotes):
+        if len(historical_security_quotes) == 0:
+            return 0.0
+
+        return 100*(float(historical_security_quotes[-1].adjusted_close) - float(historical_security_quotes[0].open)) \
+                    / float(historical_security_quotes[0].open)
 
     @staticmethod
     def __returns_list(historical_security_quotes):
@@ -38,6 +57,6 @@ class HistoricalSecurityQuotePeriod:
             res += str(quote) + "\n"
 
         return res + "\n" \
-               + "Start Date - End Date - Returns Mean - Returns Variance \n" + \
+               + "Start Date - End Date - Returns Mean - Returns - Returns Variance \n" + \
                str(self.start_date) + " " + str(self.end_date) + " " \
-               + str(self.returns_mean) + "% " + str(self.returns_variance) + "% \n";
+               + str(self.returns_mean) + "% " + str(self.returns) + "% " + str(self.returns_variance) + "% \n";

@@ -3,6 +3,7 @@ import csv
 from historical_security_quote import HistoricalSecurityQuote
 from historical_security_quote_period import HistoricalSecurityQuotePeriod
 import itertools
+from numpy import mean
 import urllib2
 
 __historical_security_quote_request_url_template = '''
@@ -35,7 +36,7 @@ def request_fifty_day_moving_average(symbol, end_day, end_month, end_year):
     last_fity_security_quotes = deque(itertools.islice(one_year_security_quotes, len(one_year_security_quotes) - 50, None))
     last_fifty_days_security_quotes = HistoricalSecurityQuotePeriod(last_fity_security_quotes)
 
-    return last_fifty_days_security_quotes.get_returns_mean()
+    return mean(last_fifty_days_security_quotes.get_close_price_list())
 
 def request_two_hundred_day_moving_average(symbol, end_day, end_month, end_year):
     one_year_security_quote_period = request_security_historical_quote_period(symbol, end_day, end_month, end_year - 1, end_day, end_month, end_year, "d")
@@ -44,7 +45,7 @@ def request_two_hundred_day_moving_average(symbol, end_day, end_month, end_year)
     last_two_hundred_days_security_quotes = deque(itertools.islice(one_year_security_quotes, len(one_year_security_quotes) - 200, None))
     last_two_hundred_days_security_quotes = HistoricalSecurityQuotePeriod(last_two_hundred_days_security_quotes)
 
-    return last_two_hundred_days_security_quotes.get_returns_mean()
+    return mean(last_two_hundred_days_security_quotes.get_close_price_list())
 
 def __construct_historical_security_quote_data(symbol, quote):
     data = dict()

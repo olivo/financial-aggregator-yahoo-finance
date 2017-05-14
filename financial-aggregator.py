@@ -54,8 +54,8 @@ print "The historical quotes for Apple are:"
 symbol = "AAPL"
 start_day = 1
 start_month = 1
-start_year = 2017
-end_day = 5
+start_year = 2016
+end_day = 12
 end_month = 5
 end_year = 2017
 frequency = "d"
@@ -68,11 +68,11 @@ print apple_historical_security_quote_period
 
 print "\n"
 
+"""
 sp_holdings = holdings.get_holdings()
 stock_candidates = ['AAPL', 'AMZN', 'FB', 'GOOGL']
 top_tech_holdings_composite_security = CompositeSecurity(filter(lambda x: x.symbol in stock_candidates, sp_holdings))
 
-"""
 best_composite_security = find_optimal_composite_security(top_tech_holdings_composite_security, stock_candidates, 0, 100, \
                                                           start_day, start_month, start_year, end_day, end_month, end_year, frequency)
 
