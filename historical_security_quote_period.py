@@ -10,6 +10,7 @@ class HistoricalSecurityQuotePeriod:
         returns_list = HistoricalSecurityQuotePeriod.__returns_list(historical_security_quotes)
         self.returns_mean = mean(returns_list)
         self.returns_variance = var(returns_list)
+        self.sharpe_ratio = self.returns / self.returns_variance
 
     def get_close_price_list(self):
         res = []
@@ -57,6 +58,7 @@ class HistoricalSecurityQuotePeriod:
             res += str(quote) + "\n"
 
         return res + "\n" \
-               + "Start Date - End Date - Returns Mean - Returns - Returns Variance \n" + \
+               + "Start Date - End Date - Returns Mean - Returns - Returns Variance - Sharpe Ratio \n" + \
                str(self.start_date) + " " + str(self.end_date) + " " \
-               + str(self.returns_mean) + "% " + str(self.returns) + "% " + str(self.returns_variance) + "% \n";
+               + str(self.returns_mean) + "% " + str(self.returns) + "% " + str(self.returns_variance) + "% " \
+               + str(self.sharpe_ratio) + "\n"
