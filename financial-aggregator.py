@@ -85,8 +85,8 @@ best_composite_security_expected_return = expected_return_composite_securities_f
 print "The expected return per period for the best composite security is:", best_composite_security_expected_return
 """
 
-fifty_day_moving_average = request_fifty_day_moving_average(symbol, end_day, end_month, end_year)
+fifty_day_moving_average = request_n_day_moving_average(symbol, 50, end_day, end_month, end_year)
 print "The 50-day moving average for", symbol, " is", fifty_day_moving_average
 
-two_hundred_day_moving_average = request_two_hundred_day_moving_average(symbol, end_day, end_month, end_year)
+two_hundred_day_moving_average = request_n_day_moving_average(symbol, 200, end_day, end_month, end_year)
 print "The 200-day moving average for", symbol, " is", two_hundred_day_moving_average
