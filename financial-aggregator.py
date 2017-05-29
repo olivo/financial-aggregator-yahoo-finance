@@ -58,11 +58,10 @@ start_year = 2016
 end_day = 12
 end_month = 5
 end_year = 2017
-frequency = "d"
 
 apple_historical_security_quote_period = request_security_historical_quote_period(symbol, start_day, start_month, \
                                                                                   start_year, end_day, end_month, \
-                                                                                  end_year, frequency)
+                                                                                  end_year)
 
 print apple_historical_security_quote_period
 
