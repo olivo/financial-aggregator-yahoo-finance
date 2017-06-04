@@ -52,11 +52,11 @@ print ""
 
 print "The historical quotes for Apple are:"
 symbol = "AAPL"
-start_day = 1
-start_month = 1
+start_day = 2
+start_month = 6
 start_year = 2016
-end_day = 12
-end_month = 5
+end_day = 2
+end_month = 6
 end_year = 2017
 
 apple_historical_security_quote_period = request_security_historical_quote_period(symbol, start_day, start_month, \
@@ -85,7 +85,7 @@ print "The expected return per period for the best composite security is:", best
 """
 
 fifty_day_moving_average = request_n_day_moving_average(symbol, 50, end_day, end_month, end_year)
-print "The 50-day moving average for", symbol, " is", fifty_day_moving_average
+print "The 50-day moving average for", symbol, "is", fifty_day_moving_average
 
 two_hundred_day_moving_average = request_n_day_moving_average(symbol, 200, end_day, end_month, end_year)
-print "The 200-day moving average for", symbol, " is", two_hundred_day_moving_average
+print "The 200-day moving average for", symbol, "is", two_hundred_day_moving_average
