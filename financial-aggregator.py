@@ -66,20 +66,19 @@ apple_historical_security_quote_period = request_security_historical_quote_perio
 print apple_historical_security_quote_period
 
 print "\n"
-
 """
 sp_holdings = holdings.get_holdings()
 stock_candidates = ['AAPL', 'AMZN', 'FB', 'GOOGL']
 top_tech_holdings_composite_security = CompositeSecurity(filter(lambda x: x.symbol in stock_candidates, sp_holdings))
 
 best_composite_security = find_optimal_composite_security(top_tech_holdings_composite_security, stock_candidates, 0, 100, \
-                                                          start_day, start_month, start_year, end_day, end_month, end_year, frequency)
+                                                          start_day, start_month, start_year, end_day, end_month, end_year)
 
 print "The best composite security is: "
 print str(best_composite_security)
 
 best_composite_security_expected_return = expected_return_composite_securities_for_period(best_composite_security, None, start_day, start_month, start_year, \
-                                                                                          end_day, end_month, end_year, frequency)
+                                                                                          end_day, end_month, end_year)
 
 print "The expected return per period for the best composite security is:", best_composite_security_expected_return
 """
