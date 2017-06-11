@@ -3,9 +3,12 @@ from security_helper import request_security, request_sp500_holdings
 from historical_security_quote_helper import *
 from historical_security_quote_period import HistoricalSecurityQuotePeriod
 from historical_composite_security_period_helper import expected_return_composite_securities_for_period, find_optimal_composite_security
+from momentum_investing import *
 
 __top_us_stock_market_indices = ['^DJI', '^GSPC', '^IXIC', '^RUA', '^RUT', '^RUI']
 __top_us_tech_stocks = ['AAPL', 'AMZN', 'FB', 'GOOGL', 'MSFT']
+__top_foreign_stock_market_indices = ['ACWX']
+__top_bond_market_indices = ['AGG']
 
 print "The information for the top US tech stocks is the following:"
 
@@ -17,6 +20,20 @@ print ""
 print "The information for the top US stock market indices is the following:"
 
 for symbol in __top_us_stock_market_indices:
+    print request_security(symbol)
+
+print ""
+
+print "The information for the top foreign stock market indices is the following:"
+
+for symbol in __top_foreign_stock_market_indices:
+    print request_security(symbol)
+
+print ""
+
+print "The information for the top bond market indices is the following:"
+
+for symbol in __top_bond_market_indices:
     print request_security(symbol)
 
 print ""
@@ -88,3 +105,6 @@ print "The 50-day moving average for", symbol, "is", fifty_day_moving_average
 
 two_hundred_day_moving_average = request_n_day_moving_average(symbol, 200, end_day, end_month, end_year)
 print "The 200-day moving average for", symbol, "is", two_hundred_day_moving_average
+
+print "Testing momentum investing"
+test_dual_momentum_investing()
