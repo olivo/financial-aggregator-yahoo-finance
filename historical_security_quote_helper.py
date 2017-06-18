@@ -1,22 +1,26 @@
 from collections import deque
 from historical_security_quote_period import HistoricalSecurityQuotePeriod
 from quandl_quote_request_helper import request_security_historical_quotes_from_quandl
+from yahoo_quote_request_helper import request_security_historical_quotes_from_yahoo
 
 import itertools
 from numpy import mean
 import sys
 
-__yahoo_historical_security_quote_request_url_template = '''
-http://ichart.yahoo.com/table.csv?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g={7}&ignore=.csv
-'''
-
 def request_security_historical_quote_period(symbol, start_day, start_month, start_year, end_day, end_month, end_year):
     try:
-        security_historical_quotes = request_security_historical_quotes_from_quandl(symbol, start_day, start_month, start_year, end_day, end_month, end_year)
-        return HistoricalSecurityQuotePeriod(security_historical_quotes)
-    except Exception:
+        security_historical_quotes = request_security_historical_quotes_from_yahoo(symbol, start_day, start_month, start_year, end_day, end_month, end_year)
+        if security_historical_quotes != None and len(security_historical_quotes) > 0:
+            return HistoricalSecurityQuotePeriod(security_historical_quotes)
+        elif security_historical_quotes == []:
+            print 'WARNING: Found no historical quotes for', symbol, 'for the given period'
+            return None
+        else:
+            print 'ERROR: Could not retrieve quotes for', symbol
+            return None
+    except Exception, e:
         print 'Exception while trying to request historical data for', symbol
-        print sys.exc_info()[0]
+        print str(e)
         return None
 
 def request_n_day_moving_average(symbol, n, end_day, end_month, end_year):

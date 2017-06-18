@@ -69,10 +69,10 @@ print ""
 
 print "The historical quotes for Apple are:"
 symbol = "AAPL"
-start_day = 2
+start_day = 16
 start_month = 6
 start_year = 2016
-end_day = 2
+end_day = 16
 end_month = 6
 end_year = 2017
 
