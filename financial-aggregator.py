@@ -69,11 +69,11 @@ print ""
 
 print "The historical quotes for Apple are:"
 symbol = "AAPL"
-start_day = 16
-start_month = 6
+start_day = 2
+start_month = 7
 start_year = 2016
-end_day = 16
-end_month = 6
+end_day = 2
+end_month = 7
 end_year = 2017
 
 apple_historical_security_quote_period = request_security_historical_quote_period(symbol, start_day, start_month, \

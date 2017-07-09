@@ -9,6 +9,7 @@ https://www.quandl.com/api/v3/datasets/WIKI/{0}.csv?start_date={1}-{2}-{3}&end_d
 '''
 
 def request_security_historical_quotes_from_quandl(symbol, start_day, start_month, start_year, end_day, end_month, end_year):
+    # TODO: Change this to operate over panda dataframes
     request_url = __quandl_historical_security_quote_request_url_template.format(symbol, start_year, start_month, start_day, \
                                                                           end_year, end_month, end_day, end_year)
     reader = csv.reader(urllib2.urlopen(request_url))
