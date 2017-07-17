@@ -69,10 +69,10 @@ print ""
 
 print "The historical quotes for Apple are:"
 symbol = "AAPL"
-start_day = 2
+start_day = 14
 start_month = 7
 start_year = 2016
-end_day = 2
+end_day = 14
 end_month = 7
 end_year = 2017
 
@@ -83,6 +83,7 @@ apple_historical_security_quote_period = request_security_historical_quote_perio
 print apple_historical_security_quote_period
 
 print "\n"
+
 """
 sp_holdings = holdings.get_holdings()
 stock_candidates = ['AAPL', 'AMZN', 'FB', 'GOOGL']

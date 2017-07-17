@@ -1,3 +1,4 @@
+import numpy
 import pandas
 import re
 import requests
@@ -40,6 +41,8 @@ def request_security_historical_quotes_from_yahoo(symbol, start_day, start_month
     string_buffer = StringIO.StringIO(raw_response)
 
     dataframe = pandas.read_csv(string_buffer, index_col = 0, parse_dates = True)
+
+    dataframe = dataframe.apply(pandas.to_numeric, errors='coerce')
 
     start_date = str(start_year) + "-" + str(start_month) + "-" + str(start_day)
     end_date = str(end_year) + "-" + str(end_month) + "-" + str(end_day)
