@@ -30,7 +30,6 @@ class HistoricalSecurityQuotePeriod:
 
         return returns
 
-
     def get_returns_mean(self):
         returns = self.get_returns()
 

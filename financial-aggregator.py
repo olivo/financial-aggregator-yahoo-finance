@@ -3,6 +3,7 @@ from security_helper import request_security, request_sp500_holdings
 from historical_security_quote_helper import *
 from historical_security_quote_period import HistoricalSecurityQuotePeriod
 from historical_composite_security_period_helper import expected_return_composite_securities_for_period, find_optimal_composite_security
+from mean_variance_optimizer import *
 from momentum_investing import *
 
 __top_us_stock_market_indices = ['^DJI', '^GSPC', '^IXIC', '^RUA', '^RUT', '^RUI']
@@ -109,3 +110,17 @@ print "The 200-day moving average for", symbol, "is", two_hundred_day_moving_ave
 
 print "Testing momentum investing"
 test_dual_momentum_investing()
+
+mean_variance_symbols = ['AAPL', 'AMZN']
+print 'Starting mean variance optimization on:', str(mean_variance_symbols)
+mean_variance_historical_quote_periods = deque()
+
+for mean_variance_symbol in mean_variance_symbols:
+    historical_quote_period = request_security_historical_quote_period(mean_variance_symbol, \
+                                                                       start_day, start_month, start_year, \
+                                                                       end_day, end_month, end_year)
+    if historical_quote_period is not None:
+        mean_variance_historical_quote_periods.append(historical_quote_period)
+
+mean_variance_optimizer = MeanVarianceOptimizer(mean_variance_historical_quote_periods)
+print 'The portfolio with the minimum variance has variance:', mean_variance_optimizer.minimize_function()
