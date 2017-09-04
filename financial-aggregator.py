@@ -1,3 +1,4 @@
+from beta_predictor import BetaPredictor
 from composite_security import CompositeSecurity
 from security_helper import request_security, request_sp500_holdings
 from historical_security_quote_helper import *
@@ -70,11 +71,11 @@ print ""
 
 print "The historical quotes for Apple are:"
 symbol = "AAPL"
-start_day = 14
-start_month = 7
+start_day = 20
+start_month = 8
 start_year = 2016
-end_day = 14
-end_month = 7
+end_day = 20
+end_month = 8
 end_year = 2017
 
 apple_historical_security_quote_period = request_security_historical_quote_period(symbol, start_day, start_month, \
@@ -84,6 +85,30 @@ apple_historical_security_quote_period = request_security_historical_quote_perio
 print apple_historical_security_quote_period
 
 print "\n"
+
+beta_linear_regression = BetaPredictor.LinearRegression(symbol, start_day, start_month, start_year, end_day, end_month, end_year)
+print 'The beta of ' + symbol + ' according to linear regression is:' + str(beta_linear_regression[0])
+
+tech_historical_quotes = []
+print "The historical security quotes from the tech sector in the S&p 500 sorted by the Sharpe Ratio"
+technology_symbols = ['AMZN', 'AAPL', 'GOOGL', 'AMD', 'NVDA', 'JD', 'SINA', 'VIPS', 'FB', 'MU', 'BABA', 'WB', 'LRCX', 'NFLX', 'PCLN', 'RE', 'BAC', 'JPM', 'BRK.B']
+
+#for tech_holding in technology_holdings:
+#    tech_historical_quote = request_security_historical_quote_period(tech_holding.symbol, start_day, start_month, \
+#                                                                                  start_year, end_day, end_month, \
+#                                                                                  end_year)
+for technology_symbol in technology_symbols:
+    tech_historical_quote = request_security_historical_quote_period(technology_symbol, start_day, start_month, \
+                                                                                  start_year, end_day, end_month, \
+                                                                                  end_year)
+    if tech_historical_quote is not None:
+        tech_historical_quotes.append(tech_historical_quote)
+
+tech_historical_quotes.sort(key=lambda x: x.get_sharpe_ratio(), reverse=True)
+
+for tech_historical_quote in tech_historical_quotes:
+    print 'Security quotes for ' + tech_historical_quote.get_symbol()
+    print tech_historical_quote
 
 """
 sp_holdings = holdings.get_holdings()

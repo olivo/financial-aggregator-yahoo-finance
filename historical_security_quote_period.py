@@ -23,15 +23,20 @@ class HistoricalSecurityQuotePeriod:
     def get_price_mean(self):
         return self.__historical_security_quotes['Adj Close'].mean()
 
-    def get_returns(self):
+    def get_returns_dataframe(self):
         adjusted_close = self.__historical_security_quotes[['Adj Close']]
         returns = adjusted_close.pct_change()
         returns.ix[0, 0] = 0
 
         return returns
 
+    def get_returns(self):
+        returns_dataframe = self.get_returns_dataframe()
+
+        return returns_dataframe['Adj Close'].values
+
     def get_returns_mean(self):
-        returns = self.get_returns()
+        returns = self.get_returns_dataframe()
 
         return returns.mean().ix[0]
 
@@ -39,7 +44,7 @@ class HistoricalSecurityQuotePeriod:
         return self.__symbol
 
     def get_returns_std(self):
-        returns = self.get_returns()
+        returns = self.get_returns_dataframe()
 
         return returns.std().ix[0]
 
